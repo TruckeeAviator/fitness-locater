@@ -3,13 +3,38 @@
 <head>
   <title>People Finder</title>
   <link rel="stylesheet" type="text/css" href="style.css">
+  <!-- Include the jQuery library -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
   <h1>People Finder</h1>
-<form action="search.php" method="post">
-  <label for="location">Enter your location:</label><br>
-  <input type="text" id="location" name="location"><br><br>
-  <input type="submit" value="Submit">
-</form>
+<!-- The search bar -->
+<input type="text" id="search-bar">
+
+<!-- The search results container -->
+<div id="search-results"></div>
+
+<!-- The JavaScript code -->
+<script>
+// Wait for the DOM to be ready
+$(document).ready(function() {
+  // Listen for changes to the search bar
+  $("#search-bar").on("input", function() {
+    // Get the user-provided location
+    var location = $(this).val();
+
+    // Send an AJAX request to the server
+    $.ajax({
+      url: "search.php",
+      type: "post",
+      data: { location: location },
+      success: function(response) {
+        // Update the search results
+        $("#search-results").html(response);
+      }
+    });
+  });
+});
+</script>
 </body>
 </html>
